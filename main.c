@@ -176,28 +176,28 @@ char * Detection_simple (char *string)
 	//printf("%d",position_dans_image(700,700,objet1));
 	if(position_dans_image(700,700,objet1)==2 && est_proche(objet1) == true)//bas gauche proche
 	{
-		strcat(phrase,"l'objet se trouve immédiatement sur votre gauche.");
+		strcat(phrase, objet1->nom+ " se trouve immédiatement sur votre gauche.");
 	}
 	else if(position_dans_image(700,700,objet1)==3 && est_proche(objet1) == true)//bas droite proche
 	{
-		strcat(phrase,"l'objet se trouve immédiatement sur votre droite.");
+		strcat(phrase,objet1->nom+ " se trouve immédiatement sur votre droite.");
 	}
 	else if(position_dans_image(700,700,objet1)==6 && est_proche(objet1) == true)//bas proche
 	{
-		strcat(phrase,"l'objet se trouve en face de vous .");
+		strcat(phrase,objet1->nom+ " se trouve en face de vous .");
 	}
 	//au fond
 	else if(position_dans_image(700,700,objet1)==0 && est_proche(objet1) == false)//haut gauche proche
 	{
-		strcat(phrase,"l'objet se trouve plus loin sur votre gauche.");
+		strcat(phrase,objet1->nom+ " se trouve plus loin sur votre gauche.");
 	}
 	else if(position_dans_image(700,700,objet1)==1 && est_proche(objet1) == false)//haut droite proche
 	{
-		strcat(phrase,"l'objet se trouve plus loin sur votre droite.");
+		strcat(phrase,objet1->nom+ " se trouve plus loin sur votre droite.");
 	}
 	else if(position_dans_image(700,700,objet1)==5 && est_proche(objet1) == false)//bas gauche proche
 	{
-		strcat(phrase,"l'objet se trouve plus loin devant vous.");
+		strcat(phrase,objet1->nom+ " se trouve plus loin devant vous.");
 	}
 	else{
 		strcat(phrase,"ouvrez la fenetre et sautez.");
