@@ -16,8 +16,6 @@
 position * centre_boxing (obj * objet)//calcule le centre du boxing et les stock dans une position
 {
 	double X = objet->x + (objet->largeur)/2;
-//	printf("%lf",objet->x);
-//	printf("%lg",X);
 	double Y = objet->y + (objet->longueur)/2;
 	position *centre = malloc(sizeof(position));
 	centre->x = X;
@@ -31,54 +29,45 @@ position * centre_boxing (obj * objet)//calcule le centre du boxing et les stock
 
 pos position_dans_image(double longueur_image, double largeur_image, obj *objet)//retourne la zone ou se situe le centre du boxing
 {
-	 //printf("%lf",objet->x);
+	 
 	 position *centre = centre_boxing (objet);
 	 if(centre->x < largeur_image/2 && centre->y < longueur_image/2 )
 	 {
-		 //printf("haut a gauche");
-		 return HAUT_GAUCHE;
-		 
+		 return HAUT_GAUCHE;	 
 	 }
 	 else if(centre->x > largeur_image/2 && centre->y < longueur_image/2 )
 	 {
-		 //printf("haut a droite");
 		 return HAUT_DROITE;
 	 }
 	else if(centre->x > largeur_image/2 && centre->y > longueur_image/2 )
 	 {
-//		 printf("bas a droite");
 		 return BAS_DROITE;
 	 } 
 	else if(centre->x < largeur_image/2 && centre->y > longueur_image/2 )
 	 {
-		 //printf("bas a gauche");
 		 return BAS_GAUCHE;
 	 }
 	 else if(centre->x == largeur_image/2 && centre->y == longueur_image/2 )
 	 {
-		 //printf("au centre");
 		 return CENTRE;
 	 }
 	 else if(centre->x == largeur_image/2 && centre->y < longueur_image/2 )
 	 {
-		 //printf("en haut ");
 		 return HAUT;
 	 }
 	 else if(centre->x == largeur_image/2 && centre->y > longueur_image/2 )
 	 {
-		 //printf("en bas");
 		 return BAS;
 	 }
 	 else if(centre->x > largeur_image/2 && centre->y == longueur_image/2 )
 	 {
-		 //printf("a droite");
 		 return DROITE;
 	 }
 	 else 
 	 {
-		 //printf("a gauche");
 		 return GAUCHE;
 	 }
+	 free(centre);
 }
 char** str_split(char* a_str, const char a_delim)
 {
@@ -137,6 +126,20 @@ liste *inserer_en_tete (liste *liste_des_objets,obj objet_liste)
 	return el;
 }
 
+
+liste * free_list(liste *list)
+{
+	liste *temp= list;
+	if(temp != NULL)
+	{
+		free_list(temp->suivant);
+		free(temp);
+		temp = NULL;
+
+	}
+	return NULL;
+}
+
 liste * liste_des_objets (char * string)
 {
 	char **tokens;
@@ -171,7 +174,8 @@ char * Detection_simple (char *string)
 	obj *objet1 = &(liste1->objet);
 	objet1->hauteur_reelle=100;
 
-	char phrase[100] = "";
+	char *phrase = (char*)malloc(sizeof(char)*100);
+	memset(phrase, '\0', 100);
 
 	//printf("%d",position_dans_image(700,700,objet1));
 	if(position_dans_image(700,700,objet1)==2 && est_proche(objet1) == true)//bas gauche proche
@@ -202,155 +206,10 @@ char * Detection_simple (char *string)
 	else{
 		strcat(phrase,"ouvrez la fenetre et sautez.");
 	}
+	free_list(liste1);
 
 return phrase;
 	
-}
-void Detection_complexe()
-{
-	//creation ligne
-	
-//on declare le nombre d'objets correspondants avec des if
-//	if(nombre_lignes == 1)
-//	{
-//		obj*objet1 =malloc(sizeof(obj));
-//		int i=0;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->nom +=chaine[i];
-//			i++;
-//		}
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->x += ligne[i];
-//			i++;
-//		}
-//		
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->y += ligne[i];
-//			i++;
-//		}
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->longueur += ligne[i];
-//			i++;
-//		}
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->largeur += ligne[i];
-//			i++;
-//		}
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->hauteur_reelle += ligne[i];
-//			i++;
-//		}
-//		Detection_simple(objet1);
-//	}
-//	//2 objets detectés
-//	else if(nombre_lignes == 2)
-//	{
-		obj*objet1=malloc(sizeof(obj));
-		obj*objet2=malloc(sizeof(obj));
-
-//	objet1-> nom = "a";
-//	objet1->hauteur_reelle = 100.0;
-//	objet1->x = 6.0;//call stack
-//	objet1->y = 666.0;
-//	objet1->largeur = 80.0;
-//	objet1->longueur = 20.0;
-//	
-//	objet2-> nom = "b";
-//	objet2->hauteur_reelle = 100.0;
-//	objet2->x = 6.0;//call stack
-//	objet2->y = 6.0;
-//	objet2->largeur = 20.0;
-//	objet2->longueur = 20.0;
-//		int i=0;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->nom +=chaine[i];
-//			i++;
-//		}
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->x += ligne[i];
-//			i++;
-//		}
-//		
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->y += ligne[i];
-//			i++;
-//		}
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->longueur += ligne[i];
-//			i++;
-//		}
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->largeur += ligne[i];
-//			i++;
-//		}
-//		i++;
-//		while(ligne[i]!=',')
-//		{
-//			objet1->hauteur_reelle += ligne[i];
-//			i++;
-//		}
-		//...
-		//comparaisons obstacles
-		//obj1 devant obj2
-		if(Detection_simple(objet1)==0 && Detection_simple(objet2)==3)
-		{
-			printf("attention %c se trouve entre vous et %c", objet1->nom, objet2->nom);
-		}
-		else if(Detection_simple(objet1)==1 && Detection_simple(objet2)==4)
-		{
-			printf("attention %c se trouve entre vous et %c", objet1->nom, objet2->nom);
-		}
-		else if(Detection_simple(objet1)==2 && Detection_simple(objet2)==5)
-		{
-			printf("attention %c se trouve entre vous et %c", objet1->nom, objet2->nom);
-		}
-		//obj2 devant obj1
-		else if(Detection_simple(objet2)==0 && Detection_simple(objet1)==3)
-		{
-			printf("attention %c se trouve entre vous et %c", objet2->nom, objet1->nom);
-		}
-		else if(Detection_simple(objet2)==1 && Detection_simple(objet1)==4)
-		{
-			printf("attention %c se trouve entre vous et %c", objet2->nom, objet1->nom);
-		}
-		else if(Detection_simple(objet2)==2 && Detection_simple(objet1)==5)
-		{
-			printf("attention %c se trouve entre vous et %c", objet2->nom, objet1->nom);
-		}
-		else
-		{
-			printf("buuuuuuug");
-		}
-//	}
-//	else if (nombre_objets ==3)
-//	{
-//		
-//	}
-//	
-//on fait les conditions
-	free(objet1);
-	free(objet2);
-
 }
 
 
@@ -364,7 +223,6 @@ void write_to_pipe (char *fifo, char *message)
     // and close it
     write(fd, message, strlen(message)+1);
     close(fd);
-    return 0;
 }
 
 
@@ -380,7 +238,6 @@ void read_from_pipe (char *fifo, char *message)
     // Print the read message
     close(fd);
 
-    return 0;
 }
 
 
@@ -388,35 +245,15 @@ void read_from_pipe (char *fifo, char *message)
 
 int main(int argc, char **argv)
 {
-//	position * p = malloc(sizeof(position));
-//	p->x = 5;
-//	p->y = 6;
-//	p->largeur = 50;
-//	p->longueur = 50;
-	
-	//determination des boxings en dur
-	
-//	obj * chaise = malloc(sizeof(obj));
-//	chaise-> nom = 'c';
-//	chaise->hauteur_reelle = 100.0;
-//	chaise->x = 6.0;//call stack
-//	chaise->y = 666.0;
-//	chaise->largeur = 80.0;
-//	chaise->longueur = 20.0;
-	//il faudrait créer un héritage des que l on créé des chaises, on ajoute juste la position.
-	
-//position_dans_image(700,700,chaise);
-
-//Detection_complexe();//param file
-//est_proche(chaise);
-
 
 char test[250] = "";
+
+while(1){
 read_from_pipe("/tmp/fifo_file", test);
-
-//liste *list = liste_des_objets(test);
- write_to_pipe("/tmp/vocal_fifo", Detection_simple(test));
-//printf("%s", list->objet.nom);
-
+char *phrase = Detection_simple(test);
+write_to_pipe("/tmp/vocal_fifo", Detection_simple(test));
+free(phrase);
+memset(test, '\0',250);
+}
 	return 0;
 }
