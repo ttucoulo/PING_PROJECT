@@ -69,15 +69,13 @@ pos position_dans_image(double longueur_image, double largeur_image, obj *objet)
 	 }
 	 free(centre);
 }
-char** str_split(char* a_str, const char a_delim)
+
+char **str_split(char *a_str, const char a_delim)
 {
-    char** result    = 0;
+    char **result    = 0;
     size_t count     = 0;
-    char* tmp        = a_str;
-    char* last_comma = 0;
-    char delim[2];
-    delim[0] = a_delim;
-    delim[1] = 0;
+    char *tmp        = a_str;
+    char *last_comma = 0;
 
     /* Count how many elements will be extracted. */
     while (*tmp)
@@ -89,20 +87,19 @@ char** str_split(char* a_str, const char a_delim)
         }
         tmp++;
     }
-
     /* Add space for trailing token. */
     count += last_comma < (a_str + strlen(a_str) - 1);
 
     /* Add space for terminating null string so caller
        knows where the list of returned strings ends. */
     count++;
-
-    result = malloc(sizeof(char*) * count);
+    result = malloc(sizeof(char *) * count);
 
     if (result)
     {
+        char delim[2] = { a_delim, '\0' };  // Fix for inconsistent splitting
         size_t idx  = 0;
-        char* token = strtok(a_str, delim);
+        char *token = strtok(a_str, delim);
 
         while (token)
         {
@@ -113,9 +110,15 @@ char** str_split(char* a_str, const char a_delim)
         assert(idx == count - 1);
         *(result + idx) = 0;
     }
-
     return result;
 }
+
+
+
+
+
+
+
 
 
 liste *inserer_en_tete (liste *liste_des_objets,obj objet_liste)
@@ -176,35 +179,35 @@ char * Detection_simple (char *string)
 
 	char *phrase = (char*)malloc(sizeof(char)*100);
 	memset(phrase, '\0', 100);
-
+	strcat(phrase, objet1->nom);
 	//printf("%d",position_dans_image(700,700,objet1));
 	if(position_dans_image(700,700,objet1)==2 && est_proche(objet1) == true)//bas gauche proche
 	{
-		strcat(phrase,"l'objet se trouve immédiatement sur votre gauche.");
+		strcat(phrase," se trouve immédiatement sur votre gauche.");
 	}
 	else if(position_dans_image(700,700,objet1)==3 && est_proche(objet1) == true)//bas droite proche
 	{
-		strcat(phrase,"l'objet se trouve immédiatement sur votre droite.");
+		strcat(phrase," se trouve immédiatement sur votre droite.");
 	}
 	else if(position_dans_image(700,700,objet1)==6 && est_proche(objet1) == true)//bas proche
 	{
-		strcat(phrase,"l'objet se trouve en face de vous .");
+		strcat(phrase," se trouve en face de vous .");
 	}
 	//au fond
 	else if(position_dans_image(700,700,objet1)==0 && est_proche(objet1) == false)//haut gauche proche
 	{
-		strcat(phrase,"l'objet se trouve plus loin sur votre gauche.");
+		strcat(phrase," se trouve plus loin sur votre gauche.");
 	}
 	else if(position_dans_image(700,700,objet1)==1 && est_proche(objet1) == false)//haut droite proche
 	{
-		strcat(phrase,"l'objet se trouve plus loin sur votre droite.");
+		strcat(phrase," se trouve plus loin sur votre droite.");
 	}
 	else if(position_dans_image(700,700,objet1)==5 && est_proche(objet1) == false)//bas gauche proche
 	{
-		strcat(phrase,"l'objet se trouve plus loin devant vous.");
+		strcat(phrase," se trouve plus loin devant vous.");
 	}
 	else{
-		strcat(phrase,"ouvrez la fenetre et sautez.");
+		strcat(phrase," ouvrez la fenetre et sautez.");
 	}
 	free_list(liste1);
 
@@ -241,6 +244,26 @@ void read_from_pipe (char *fifo, char *message)
 }
 
 
+char * thereIs(liste * objets)
+{
+liste *temp=objets;
+char *phrase = (char*)malloc(sizeof(char)*250);
+memset(phrase, '\0', 250);
+    if(temp != NULL)
+    {
+	strcmp(phrase, "Il ya un ");
+    }
+    temp = temp->suivant;
+    while(temp)
+    {
+	strcmp(phrase, ", ");
+	strcmp(phrase, temp->objet.nom);
+	temp = temp-> suivant;
+    }
+return phrase;
+}
+
+
 
 
 int main(int argc, char **argv)
@@ -250,9 +273,11 @@ char test[250] = "";
 
 while(1){
 read_from_pipe("/tmp/fifo_file", test);
-char *phrase = Detection_simple(test);
-write_to_pipe("/tmp/vocal_fifo", Detection_simple(test));
+liste *objets = liste_des_objets(test);
+char *phrase = thereIs(objets);
+write_to_pipe("/tmp/vocal_fifo", phrase);
 free(phrase);
+free_list(objets);
 memset(test, '\0',250);
 }
 	return 0;
