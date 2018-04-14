@@ -29,6 +29,23 @@ def calculate_angle(x):
 def orthogonal_projection(angle, distance):
 	return math.cos(math.radians(angle)) * distance 
 
+def orthogonal_projection1(angle, distance):
+	return math.sin(math.radians(angle)) * distance 
+
+def detection_simple(x,distance):
+	oppose=orthogonal_projection1(calculate_angle(x),distance)
+	if(oppose>-0.5 and oppose<0.5 and distance <2):
+		return "l'objet se trouve au centre devant vous"
+	elif(oppose<=-0.5 and distance <2):
+		return "l'objet se trouve juste sur votre gauche"
+	elif(oppose>=0.5 and distance<2):
+		return "l'objet se trouve juste sur votre droite"
+	elif(oppose>-0.5 and oppose<0.5 and distance >2):
+		return "l'objet se trouve devant vous"
+	elif(oppose<=0.5 and distance >2):
+		return "l'objet se trouve un peu plus loin sur votre gauche"
+	else:
+		return "l'objet se trouve un peu plus loin sur votre droite"
 
 
 if __name__ == '__main__':

@@ -14,7 +14,6 @@ typedef struct _position
 typedef struct _objet
 {
 	char nom[20];
-//	position *pos;
 	double x;
 	double y;
 	double longueur;
