@@ -11,4 +11,4 @@ if __name__ == "__main__":
 	liste.append(table)
 	liste.append(chaise)
 	#liste.append(ordinateur)
-	print(detection_obstacle(liste,0,30))
+	print(detection_obstacle(liste,1,30))

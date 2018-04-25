@@ -83,13 +83,14 @@ def detection_obstacle(liste,index_in_liste,seuil_angle):   #index_in_liste est 
 	    angle_objet=calculate_angle(liste[index_in_liste].x)
             projete_mediane_objet=orthogonal_projection(liste[index_in_liste].angle,liste[index_in_liste].distance)
             for element in liste:
-		angle_element=calculate_angle(element.x)
-		projete_mediane_obstacle=orthogonal_projection(element.angle,element.distance)
-		if(projete_mediane_obstacle<projete_mediane_objet):
-			if(angle_element+seuil_angle>angle_objet and angle_element<angle_objet):
-                    		return "Obstacle detecte "+element.nom
-                	elif(angle_element-seuil_angle<angle_objet and angle_element> angle_objet):
-                    		return "Obstacle detecte "+element.nom
+		if(element.x!=liste[index_in_liste].x or element.y!=liste[index_in_liste].y):
+			angle_element=calculate_angle(element.x)
+			projete_mediane_obstacle=orthogonal_projection(element.angle,element.distance)
+			if(projete_mediane_obstacle<projete_mediane_objet):
+				if(angle_element+seuil_angle>angle_objet and angle_element<angle_objet):
+                    			return "Obstacle detecte "+element.nom
+                		elif(angle_element-seuil_angle<angle_objet and angle_element> angle_objet):
+                    			return "Obstacle detecte "+element.nom
             return "Il n'y a aucun obstacle devant l'objet"
     else:
         return "Il n'y a aucun objet dans votre champ de vision"
