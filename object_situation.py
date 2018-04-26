@@ -19,17 +19,17 @@ def description (liste, obj_list):
 	return phrase
 
 
-def detection_simple(x,distance):
-        oppose=orthogonal_projection1(calculate_angle(x),distance)
-        if(oppose>-0.5 and oppose<0.5 and distance <2):
+def detection_simple(objet,distance, seuil_oppose, seuil_distance):
+        oppose=distance_from_center(calculate_angle(objet.x),distance)
+        if(oppose>-seuil_oppose and oppose<seuil_oppose and distance <seuil_distance):
                 return "l'objet se trouve au centre devant vous"
-        elif(oppose<=-0.5 and distance <2):
+        elif(oppose<=-seuil_oppose and distance <seuil_distance):
                 return "l'objet se trouve juste sur votre gauche"
-        elif(oppose>=0.5 and distance<2):
+        elif(oppose>=seuil_oppose and distance<seuil_distance):
                 return "l'objet se trouve juste sur votre droite"
-        elif(oppose>-0.5 and oppose<0.5 and distance >2):
+        elif(oppose>-seuil_oppose and oppose<seuil_oppose and distance >seuil_distance):
                 return "l'objet se trouve devant vous"
-        elif(oppose<=0.5 and distance >2):
+        elif(oppose<=seuil_oppose and distance >seuil_distance):
                 return "l'objet se trouve un peu plus loin sur votre gauche"
         else:
                 return "l'objet se trouve un peu plus loin sur votre droite"
