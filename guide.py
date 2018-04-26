@@ -1,4 +1,5 @@
 
+from object_situation import *
 
 import os
 import sys
@@ -7,7 +8,6 @@ import collections as c
 
 while True:
 	obj_names, objects = liste_des_objets()
-	liste_inter = list(set(obj_names).intersection(objects_list))
 
 	fifo = open("/tmp/detection", "r")
 	phrase = "je ne vois rien"

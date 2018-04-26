@@ -1,11 +1,6 @@
+from geometric_situation import *
 
-
-objects_list = ['personne', 'telephone', 'ordinateur', 'sac', 'chaise', 'table', 'livre', 'fauteuil', 'bouteille', 'ecran']
-
-mascular = {'un' : ['telephone', 'ordinateur', 'sac', 'livre', 'fauteuil','ecran'], 'une' : ['personne', 'chaise', 'table', 'bouteille']}
-
-real_objects_heights = {"chaise" : 80, "table":80, "ordinateur":25}
-
+objects_list = ['personne' : [1800, 'un'], 'telephone' : [10, 'un'], 'ordinateur' : [25, 'un'], 'sac' : [40, 'un'], 'chaise' : [80, 'une'], 'table' : [80, 'une'], 'livre' : [10, 'un'], 'fauteuil' : [80, 'un'], 'bouteille': [10, 'une'], 'ecran' : [40, 'un']]
 
 
 class objet:
@@ -15,10 +10,8 @@ class objet:
 		self.y=Y
 		self.largeur=Largeur
 		self.hauteur=Hauteur
-		self.distance=calculate_distance(real_objects_heights[Nom],Hauteur)
+		self.distance=calculate_distance(objects_list[Nom][0],Hauteur)
 		self.angle=calculate_angle(X)
-
-
 
 
 def liste_des_objets():
@@ -28,9 +21,10 @@ def liste_des_objets():
 	objet = line.readline().rstrip('\x00').split(";")
 	for obj in objet:
 		tab = obj.split(",")
-		new_objet=objet(tab[0].strip(),int(tab[1].strip()),int(tab[2].strip()),int(tab[3].strip()),int(tab[4].strip()))
-		liste.append(new_objet)
-	obj_names_list = [o.Nom for x in liste if x]
+		if tab[0].strip() in objects_list.keys():
+			new_objet=objet(tab[0].strip(),int(tab[1].strip()),int(tab[2].strip()),int(tab[3].strip()),int(tab[4].strip()))
+			liste.append(new_objet)
+	obj_names_list = [o.nom for x in liste if x]
 	fifo.close()
 	return obj_names_list, liste
 

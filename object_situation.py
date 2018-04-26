@@ -1,5 +1,5 @@
 
-from geometric_situation import *
+from objects import *
 
 def description (liste, obj_list):
 	if not liste:
@@ -9,20 +9,14 @@ def description (liste, obj_list):
 		phrase = "il y a "
 		plur = ""
 		for mot in liste:
-			if dic[mot] == 1:
-				if mot in mascular['un']:
-					plur = "un"
-				else:
-				plur = "une"
-			elif dic[mot] > 1:
+			if dic[mot] > 1:
 				plur = "des"
+			else:
+				plur = objects_list[mot][1]
 			phrase += plur+" "
 			phrase+=mot
 			phrase +=", "
 	return phrase
-
-
-
 
 
 def detection_simple(x,distance):
@@ -60,7 +54,3 @@ def detection_obstacle(liste,index_in_liste,seuil_angle):   #index_in_liste est 
             return "Il n'y a aucun obstacle devant l'objet"
     else:
         return "Il n'y a aucun objet dans votre champ de vision"
-
-
-
-
