@@ -1,14 +1,14 @@
-
+import collections as c
 from objects import *
 
-def description (liste, obj_list):
+def description (liste):
 	if not liste:
 		phrase = "Je ne reconnais rien de ce que j'ai appris"
 	else:
-		dic = c.Counter(obj_list)
+		dic = c.Counter(liste)
 		phrase = "il y a "
 		plur = ""
-		for mot in liste:
+		for mot in dic.keys():
 			if dic[mot] > 1:
 				plur = "des"
 			else:
@@ -19,22 +19,25 @@ def description (liste, obj_list):
 	return phrase
 
 
-def detection_simple(objet,distance, seuil_oppose, seuil_distance):
-        oppose=distance_from_center(calculate_angle(objet.x),distance)
-        if(oppose>-seuil_oppose and oppose<seuil_oppose and distance <seuil_distance):
-                return "l'objet se trouve au centre devant vous"
-        elif(oppose<=-seuil_oppose and distance <seuil_distance):
-                return "l'objet se trouve juste sur votre gauche"
-        elif(oppose>=seuil_oppose and distance<seuil_distance):
-                return "l'objet se trouve juste sur votre droite"
-        elif(oppose>-seuil_oppose and oppose<seuil_oppose and distance >seuil_distance):
-                return "l'objet se trouve devant vous"
-        elif(oppose<=seuil_oppose and distance >seuil_distance):
-                return "l'objet se trouve un peu plus loin sur votre gauche"
-        else:
-                return "l'objet se trouve un peu plus loin sur votre droite"
+def detection_simple(objet, angle_seuil, distance_seuil):
+	phrase = "{0} {1} se trouve ".format(objects_list[objet.nom][1], objet.nom)
+	if abs(objet.angle) <= angle_seuil:
+		phrase = "{0} juste devant vous ".format(phrase)
+	elif abs(objet.angle) > angle_seuil:
+		if objet.angle >0 :
+			phrase="{0} sur votre droite".format(phrase)
+		else:
+			phrase = "{0} sur votre gauche".format(phrase)
+	if objet.distance < distance_seuil:
+		phrase = "{0} juste a {1} metres".format(phrase, objet.distance)
+	else:
+		phrase = "{0} un peu plus loin a {1} metres".format(phrase, objet.distance)
+	return phrase
 
 
+
+
+######### Non intégrée pour l'instant
 def detection_obstacle(liste,index_in_liste,seuil_angle):   #index_in_liste est l'index dans la liste de l'objet que je souhaite atteindre
     if (liste):
         if(len(liste)==1):
