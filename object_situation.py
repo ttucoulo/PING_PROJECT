@@ -82,7 +82,7 @@ def selection_objet(liste_objet, nom_objet,seuil_angle):
 
 
 
-######### Non intégrée pour l'instant
+######### Non integree pour l'instant
 def detection_obstacle(liste,index_in_liste,seuil_angle):   #index_in_liste est l'index dans la liste de l'objet que je souhaite atteindre
     if (liste):
         if(len(liste)==1):

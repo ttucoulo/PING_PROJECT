@@ -23,7 +23,7 @@ def liste_des_objets():
 		if tab[0].strip() in objects_list.keys():
 			try:
 				new_objet=Objet(tab[0].strip(),int(tab[1].strip()),int(tab[2].strip()),int(tab[3].strip()),int(tab[4].strip()))
-			liste.append(new_objet)
+				liste.append(new_objet)
 			except ValueError:
 	obj_names_list = [o.nom for o in liste if o]
 	fifo.close()
