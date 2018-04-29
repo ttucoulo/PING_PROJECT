@@ -36,7 +36,6 @@ def detection_simple(objet, angle_seuil, distance_seuil):
 
 
 def return_reachable_object(liste_objet, seuil_angle):
-	objet_distance_mini=Objet(None,None,None,None,None)
 	liste_with_obstacle=[]
 	liste_sans_obstacle=[]
 	for element in liste_objet:
@@ -46,14 +45,18 @@ def return_reachable_object(liste_objet, seuil_angle):
 			liste_sans_obstacle.append(element)
 	if(len(liste_sans_obstacle)==0):
 		distance_mini=liste_with_obstacle[0].distance
+		objet_distance_mini=liste_sans_obstacle[0]
 		for objet in liste_with_obstacle:
 			if(objet.distance<distance_mini):
+				distance_mini=objet.distance
 				objet_distance_mini=objet
 		return objet_distance_mini
 	else:
 		distance_mini=liste_sans_obstacle[0].distance
+		objet_distance_mini=liste_sans_obstacle[0]
 		for objet in liste_sans_obstacle:
 			if(objet.distance<distance_mini):
+				distance_mini=objet.distance
 				objet_distance_mini=objet
 		return objet_distance_mini
 			
