@@ -35,13 +35,58 @@ def detection_simple(objet, angle_seuil, distance_seuil):
 	return phrase
 
 
+def return_reachable_object(liste_objet, seuil_angle):
+	objet_distance_mini=Objet(None,None,None,None,None)
+	liste_with_obstacle=[]
+	liste_sans_obstacle=[]
+	for element in liste_objet:
+		if(detection_obstacle(liste_objet,liste_objet.index(element),seuil_angle)==True):
+			liste_with_obstacle.append(element)
+		else:
+			liste_sans_obstacle.append(element)
+	if(len(liste_sans_obstacle)==0):
+		distance_mini=liste_with_obstacle[0].distance
+		for objet in liste_with_obstacle:
+			if(objet.distance<distance_mini):
+				objet_distance_mini=objet
+		return objet_distance_mini
+	else:
+		distance_mini=liste_sans_obstacle[0].distance
+		for objet in liste_sans_obstacle:
+			if(objet.distance<distance_mini):
+				objet_distance_mini=objet
+		return objet_distance_mini
+			
+		
+	
+
+def selection_objet(liste_objet, nom_objet,seuil_angle):
+	compteur=0
+	liste=[]
+	for element in liste_objet:
+		if(element.nom==nom_objet):
+			compteur=compteur+1
+	if(compteur==0):
+		return "Il n'y a pas de "+nom_objet+" dans votre champ de vision"
+
+	elif(compteur==1):
+		for element in liste_objet:
+			if(element.nom==nom_objet):
+				return element
+	else:
+		for element in liste_objet:
+			if(element.nom==nom_objet):
+				liste.append(element)
+		return return_reachable_object(liste,seuil_angle)
+
+
 
 
 ######### Non intégrée pour l'instant
 def detection_obstacle(liste,index_in_liste,seuil_angle):   #index_in_liste est l'index dans la liste de l'objet que je souhaite atteindre
     if (liste):
         if(len(liste)==1):
-            return "Il n'y a aucun obstacle devant l'objet"
+            return False
         else:
             angle_objet=calculate_angle(liste[index_in_liste].x)
             projete_mediane_objet=orthogonal_projection(liste[index_in_liste].angle,liste[index_in_liste].distance)
@@ -51,9 +96,9 @@ def detection_obstacle(liste,index_in_liste,seuil_angle):   #index_in_liste est 
                         projete_mediane_obstacle=orthogonal_projection(element.angle,element.distance)
                         if(projete_mediane_obstacle<projete_mediane_objet):
                                 if(angle_element+seuil_angle>angle_objet and angle_element<angle_objet):
-                                        return "Obstacle detecte "+element.nom
+                                        return True
                                 elif(angle_element-seuil_angle<angle_objet and angle_element> angle_objet):
-                                        return "Obstacle detecte "+element.nom
-            return "Il n'y a aucun obstacle devant l'objet"
+                                        return True
+            return False
     else:
-        return "Il n'y a aucun objet dans votre champ de vision"
+        return False
