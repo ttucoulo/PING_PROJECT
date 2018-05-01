@@ -35,11 +35,11 @@ def detection_simple(objet, angle_seuil, distance_seuil):
 	return phrase
 
 
-def return_reachable_object(liste_objet, seuil_angle):
+def return_reachable_object(liste_objet, liste,seuil_angle):
 	liste_with_obstacle=[]
 	liste_sans_obstacle=[]
-	for element in liste_objet:
-		if(detection_obstacle(liste_objet,liste_objet.index(element),seuil_angle)==True):
+	for element in liste:
+		if(detection_obstacle(liste_objet,liste.index(element),seuil_angle)==True):
 			liste_with_obstacle.append(element)
 		else:
 			liste_sans_obstacle.append(element)
@@ -80,7 +80,7 @@ def selection_objet(liste_objet, nom_objet,seuil_angle):
 		for element in liste_objet:
 			if(element.nom==nom_objet):
 				liste.append(element)
-		return return_reachable_object(liste,seuil_angle)
+		return return_reachable_object(liste_objet,liste,seuil_angle)
 
 
 
