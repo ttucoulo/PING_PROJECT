@@ -11,6 +11,8 @@ class Objet:
 		self.hauteur=Hauteur
 		self.distance=calculate_distance(objects_list[Nom][0],Hauteur)
 		self.angle=calculate_angle(X)
+	def __eq__(self, other):
+		return self.__dict__ == other.__dict__
 
 
 def liste_des_objets():
@@ -25,7 +27,7 @@ def liste_des_objets():
 				new_objet=Objet(tab[0].strip(),int(tab[1].strip()),int(tab[2].strip()),int(tab[3].strip()),int(tab[4].strip()))
 				liste.append(new_objet)
 			except ValueError:
-				print("oupss")
+				print("object not parsable")
 	obj_names_list = [o.nom for o in liste if o]
 	fifo.close()
 	return obj_names_list, liste

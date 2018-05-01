@@ -21,7 +21,7 @@ def normalize_X(x):
 	return x-FRAME_WIDTH/2
 
 def calculate_distance(real_object_height, image_object_height):
-	return (FOCAL * real_object_height * FRAME_HEIGHT)/(image_object_height * SENSOR_HEIGHT)
+	return (FOCAL * real_object_height * FRAME_HEIGHT)/(image_object_height * SENSOR_HEIGHT*1000)
 
 
 def calculate_angle(x):
