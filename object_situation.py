@@ -14,15 +14,13 @@ def detection_obstacle(liste,wanted_object,seuil_angle):
 	return result
 
 
-def wanted_object_list(liste, wanted_object_name):
-	return [item for item in liste if item.nom == wanted_object_name]
 
 
 def return_reachable_object(liste_objet, object_name, seuil_angle):
 	liste_with_obstacle=[]
 	liste_sans_obstacle=[]
 
-	wanted_objects = wanted_object_list(liste_objet, object_name)
+	wanted_objects = [item for item in liste_objet if item.nom == object_name]
 	
 	for element in wanted_objects :
 		obstacles = detection_obstacle(liste_objet, element, seuil_angle)
@@ -58,7 +56,7 @@ def situate_object(objet,obstacles, angle_seuil, distance_seuil):
 	if obstacles:
 		for obstacle in obstacles:
 			t = t+objects_list[obstacle.name][1]+" "+ obstacle.name +", "
-	phrase = "{0} Mais attention, {1} se trouvent avant".format(phrase, t)
+		phrase = "{0} Mais attention, {1} se trouvent avant".format(phrase, t)
 	return phrase
 
 
